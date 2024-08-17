@@ -1,7 +1,7 @@
 import io
 from io import BytesIO
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template, send_from_directory
 from flask_cors import CORS
 from search_system import load_and_preprocess_image, extract_features_image, search_similar_images, preprocess_image
 import numpy as np
@@ -9,7 +9,7 @@ import tensorflow as tf
 from sklearn.neighbors import NearestNeighbors
 from PIL import Image
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='.', static_folder='.')
 CORS(app)
 
 tamanio_imagen = 224
@@ -55,6 +55,15 @@ def search():
 
     return jsonify(results)
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+# Ruta genérica para servir cualquier archivo desde la carpeta actual
+@app.route('/<path:filename>')
+def static_files(filename):
+    # Utiliza el directorio actual como base
+    return send_from_directory(os.getcwd(), filename)
 
 if __name__ == '__main__':
     app.run(debug=True)
