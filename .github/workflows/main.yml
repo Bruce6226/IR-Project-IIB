@@ -27,6 +27,13 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
 
+      - name: Verify files
+        run: |
+          echo "List of files in current directory:"
+          ls -l
+          echo "Checking if train_features.npy exists:"
+          ls -l train_features.npy
+
       - name: Print debugging information
         run: |
           echo "Python Version: $(python --version)"
@@ -35,4 +42,6 @@ jobs:
           echo "Contents of site-packages: $(ls -l venv/lib/python*/site-packages)"
 
       - name: Run tests
-        run: python app.py
+        run: |
+          source venv/bin/activate
+          python app.py
