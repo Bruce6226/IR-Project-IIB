@@ -67,9 +67,9 @@ tamanio_imagen = 224
 base_model = tf.keras.applications.VGG16(weights='imagenet', include_top=False,
                                          input_shape=(tamanio_imagen, tamanio_imagen, 3))
 model = tf.keras.Model(inputs=base_model.input, outputs=base_model.layers[-1].output)
-train_features = np.load('train_features.npy')
-train_images = np.load('train_images.npy')
-train_labels = np.load('train_labels.npy')
+train_features = np.load('train_features.npy', allow_pickle=True)
+train_images = np.load('train_images.npy', allow_pickle=True)
+train_labels = np.load('train_labels.npy', allow_pickle=True)
 knn = NearestNeighbors(n_neighbors=10, algorithm='ball_tree').fit(train_features)
 
 os.makedirs('static/results/', exist_ok=True)
