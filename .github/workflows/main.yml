@@ -12,10 +12,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install Git LFS
+        run: git lfs install
+
+      - name: Fetch LFS objects
+        run: git lfs pull
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8 
+          python-version: 3.8
 
       - name: Create virtual environment
         run: |
@@ -27,13 +33,6 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
 
-      - name: Verify files
-        run: |
-          echo "List of files in current directory:"
-          ls -l
-          echo "Checking if train_features.npy exists:"
-          ls -l train_features.npy
-
       - name: Print debugging information
         run: |
           echo "Python Version: $(python --version)"
@@ -42,6 +41,4 @@ jobs:
           echo "Contents of site-packages: $(ls -l venv/lib/python*/site-packages)"
 
       - name: Run tests
-        run: |
-          source venv/bin/activate
-          python app.py
+        run: python app.py
