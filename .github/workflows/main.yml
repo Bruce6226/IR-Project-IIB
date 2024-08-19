@@ -41,4 +41,4 @@ jobs:
           echo "Contents of site-packages: $(ls -l venv/lib/python*/site-packages)"
 
       - name: Run tests
-        run: python app.py
+        run: gunicorn "app:create_app()"
