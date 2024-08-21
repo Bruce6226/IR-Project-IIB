@@ -18,8 +18,9 @@ from PIL import Image
 from flask_ngrok import run_with_ngrok
 from pyngrok import ngrok
 
-public_url = ngrok.connect(5000)
-print('Public URL:', public_url)
+ngrok_tunnel = ngrok.connect(5000)
+public_url = ngrok_tunnel.public_url  # Extraer la URL pública
+print("Public URL:", public_url)
 
 tamanio_imagen = 224
 
@@ -78,9 +79,9 @@ knn = NearestNeighbors(n_neighbors=10, algorithm='ball_tree').fit(train_features
 
 os.makedirs('static/results/', exist_ok=True)
 
-@app.route('/api/v1/test', methods=['GET'])
-def test():
-    return jsonify({'message': 'Server is working'})
+@app.route('/api/v1/ngrok-url', methods=['GET'])
+def get_ngrok_url():
+    return jsonify({'ngrok_url': public_url})
 
 @app.route('/api/v1/search', methods=['POST'])
 def search():
@@ -112,7 +113,8 @@ def search():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    print(f"Public URL: {public_url}")
+    return render_template('index.html', public_url=public_url)
 
 # Ruta genérica para servir cualquier archivo desde la carpeta actual
 @app.route('/<path:filename>')
@@ -122,6 +124,5 @@ def static_files(filename):
 
 if __name__ == '__main__':
     # Start Ngrok tunnel before running the Flask app
-    public_url = run_with_ngrok(app)
-    print(f"Public URL: {public_url}")
+    run_with_ngrok(app)
     app.run()
