@@ -15,6 +15,7 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import normalize
 import matplotlib.pyplot as plt
 from PIL import Image
+from flask_ngrok import run_with_ngrok
 
 
 tamanio_imagen = 224
@@ -117,4 +118,8 @@ def static_files(filename):
     return send_from_directory(os.getcwd(), filename)
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0')
+    app = create_app()
+    # Start Ngrok tunnel before running the Flask app
+    public_url = run_with_ngrok(app)
+    print(f"Public URL: {public_url}")
+    app.run(debug=False)
