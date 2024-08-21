@@ -17,6 +17,8 @@ import matplotlib.pyplot as plt
 from PIL import Image
 from flask_ngrok import run_with_ngrok
 
+public_url = ngrok.connect(5000)
+print('Public URL:', public_url)
 
 tamanio_imagen = 224
 
@@ -122,4 +124,4 @@ if __name__ == '__main__':
     # Start Ngrok tunnel before running the Flask app
     public_url = run_with_ngrok(app)
     print(f"Public URL: {public_url}")
-    app.run(debug=False)
+    app.run()
