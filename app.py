@@ -16,6 +16,7 @@ from sklearn.preprocessing import normalize
 import matplotlib.pyplot as plt
 from PIL import Image
 from flask_ngrok import run_with_ngrok
+from pyngrok import ngrok
 
 public_url = ngrok.connect(5000)
 print('Public URL:', public_url)
