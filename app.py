@@ -121,7 +121,6 @@ def static_files(filename):
     return send_from_directory(os.getcwd(), filename)
 
 if __name__ == '__main__':
-    app = create_app()
     # Start Ngrok tunnel before running the Flask app
     public_url = run_with_ngrok(app)
     print(f"Public URL: {public_url}")
