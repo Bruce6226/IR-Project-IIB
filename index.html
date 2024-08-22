@@ -66,7 +66,7 @@
         fetch('/api/v1/ngrok-url')
             .then(response => response.json())
             .then(data => {
-                const publicUrl = data.ngrok_url;
+                const publicUrl = 'https://3148-2800-5f0-814-bcf4-4be-b30b-b53a-45af.ngrok-free.app';
 
                 fetch(`${publicUrl}/api/v1/search`, {
                     method: 'POST',
